@@ -2,34 +2,46 @@
 <html>
 <head>
     <style>
-        body {
-            background-color: black;
-            color: white;
-            font-size: 100px;
-            text-align: center;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+        html, body {
+            height: 100%;
+            width: 100%;
             margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: black;
+            flex-direction: column;
+        }
+        #clock {
+            color: white;
+            font-size: 60px;
         }
     </style>
 </head>
 <body>
     <div id="clock"></div>
-
     <script>
-        function updateTime() {
-            var date = new Date();
-            var hours = date.getHours();
-            var minutes = date.getMinutes();
-            var seconds = date.getSeconds();
-            hours = hours < 10 ? '0' + hours : hours;
-            minutes = minutes < 10 ? '0' + minutes : minutes;
-            seconds = seconds < 10 ? '0' + seconds : seconds;
-            document.getElementById('clock').innerHTML = hours + ':' + minutes + ':' + seconds;
+        function checkTime(i) {
+            if (i < 10) {
+                i = "0" + i;
+            }
+            return i;
         }
-        setInterval(updateTime, 1000);
+
+        function startTime() {
+            var today = new Date();
+            var h = today.getHours();
+            var m = today.getMinutes();
+            var s = today.getSeconds();
+            // add a zero in front of numbers<10
+            m = checkTime(m);
+            s = checkTime(s);
+            document.getElementById('clock').innerHTML = h + ":" + m + ":" + s;
+            t = setTimeout(function() {
+                startTime()
+            }, 500);
+        }
+        startTime();
     </script>
 </body>
 </html>
